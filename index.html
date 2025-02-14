@@ -12,8 +12,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/split.js/1.6.5/split.min.js"></script>
 
     <!-- XTerm.js for terminal -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/xterm/4.19.0/xterm.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xterm/4.19.0/xterm.min.js"></script>
+    <link rel="stylesheet" href="node_modules/@xterm/xterm/css/xterm.css" />
+    <script src="node_modules/@xterm/xterm/lib/xterm.js"></script>
 
     <!-- fonts -->
     <style>
@@ -53,11 +53,22 @@
 
     <!-- Main Container with Resizable Panels -->
     <div id="main-container">
-        <div id="editor-container"></div>
+      <div id="editor-container"></div>
         <div id="right-panel">
-            <textarea id="stdin-input" placeholder="코드 실행 시 입력으로 전달되는 값을 미리 기입해주세요(입력값은 엔터로 구분)"></textarea>
-            <div id="output-terminal"></div>
+          <!-- User Input 영역 -->
+          <div id="input-output-container">
+            <div id="input-container">
+              <div class="input-header">입력</div>
+              <textarea id="stdin-input" placeholder="코드 실행 시 입력으로 전달되는 값을 미리 기입해주세요(입력값은 엔터로 구분)"></textarea>
+            </div>
+            <div id="terminal-container">
+              <!-- Output Terminal 영역 -->
+              <div class="terminal-header">Terminal</div>
+              <div id="output-terminal"></div>
+            </div>
+          </div>
         </div>
+      
     </div>
 
     <!-- Load Monaco Editor -->
