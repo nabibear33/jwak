@@ -1,106 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-  <meta charset="UTF-8" />
-  <title>Online Interpreter</title>
-  <!-- xterm.js stylesheet -->
-  <link rel="stylesheet" href="node_modules/@xterm/xterm/css/xterm.css" />
-  <script src="node_modules/@xterm/xterm/lib/xterm.js"></script>
-  <style>
-    /* Reset some default browser styles */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      display: flex;
-      flex-direction: column;
-      height: 100vh;
-    }
-
-    /* Toolbar for the Compile/Run button */
-    .toolbar {
-      padding: 8px;
-      background-color: #f7f7f7;
-      border-bottom: 1px solid #ccc;
-    }
-
-    .toolbar button {
-      padding: 6px 12px;
-      font-size: 14px;
-      background-color: #fff;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background-color 0.2s;
-    }
-
-    .toolbar button:hover {
-      background-color: #eaeaea;
-    }
-
-    /* Editor container takes the top half */
-    #editor-container {
-      height: 70%;
-    }
-
-    /* Terminal container takes the bottom half */
-    #terminal-container {
-      height: 30%;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Pages 알림</title>
 </head>
 <body>
-  <!-- Toolbar with the Compile/Run button -->
-  <div class="toolbar">
-    <button id="run-btn">Compile/Run</button>
-  </div>
-  
-  <!-- Code editor container -->
-  <div id="editor-container"></div>
-  
-  <!-- Terminal emulator container -->
-  <div id="terminal-container"></div>
+    <h1>GitHub Pages에서 Render 서버로 요청</h1>
+    <button id="notify-btn">알림 보내기</button>
 
-  <!-- Load Monaco Editor via CDN -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.33.0/min/vs/loader.js"></script>
-  <script>
-    // Configure the base path for Monaco Editor
-    require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.33.0/min/vs' }});
-    
-    // Create the editor instance
-    require(['vs/editor/editor.main'], function() {
-      window.editor = monaco.editor.create(document.getElementById('editor-container'), {
-        value: [
-          '// Write your code here',
-          'print("Hello, world!")'
-        ].join('\n'),
-        language: 'javascript', // Change this to your custom language if needed
-        theme: 'vs-dark',
-        automaticLayout: true
-      });
-    });
-  </script>
-
-  <!-- Load xterm.js via CDN -->
-  <script>
-    // Create and open the terminal
-    const terminal = new Terminal({
-      cursorBlink: true
-    });
-    terminal.open(document.getElementById('terminal-container'));
-    terminal.write('Welcome to the Online Interpreter Terminal\r\n');
-
-    // Handle Compile/Run button click
-    document.getElementById('run-btn').addEventListener('click', function() {
-      const code = window.editor.getValue();
-      terminal.write('\r\nCompiling and executing code...\r\n');
-      terminal.write('-----------------------------------\r\n');
-      
-    });
-  </script>
+    <script>
+        document.getElementById("notify-btn").addEventListener("click", async function() {
+            try {
+                const response = await fetch("https://your-render-server.onrender.com/notify", {
+                    method: "GET",
+                });
+                const data = await response.json();
+                alert(data.message); // 브라우저 알림
+            } catch (error) {
+                alert("서버 요청 실패!");
+                console.error(error);
+            }
+        });
+    </script>
 </body>
 </html>
