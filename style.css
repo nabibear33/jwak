@@ -1,0 +1,135 @@
+/* 기본 스타일 */
+body {
+    margin: 0;
+    font-family: "OneMobilePop", sans-serif;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 헤더 스타일 */
+header {
+    background: #f5f5f5;
+    padding: 10px;
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+/* 메인 컨테이너 */
+#main-container {
+    flex-grow: 1;
+    display: flex;
+    height: calc(100vh - 80px);
+}
+
+/* 코드 에디터 영역 */
+#editor-container {
+    flex: 2;
+    border-right: 3px solid #ccc;
+}
+
+/* 입력 & 터미널 영역 */
+#right-panel {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+/* 실행 버튼 & STDIN 라벨 영역 */
+#control-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 10px;
+    background: #f5f5f5;
+    border-bottom: 2px solid #ccc;
+}
+
+/* STDIN 라벨 스타일 */
+#stdin-label {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* 실행 버튼 스타일 */
+#run-btn {
+    background-color: #d9534f;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#run-btn:hover {
+    background-color: #aa1e1a;
+}
+
+/* 입력 영역 */
+#stdin-input {
+    height: 20%;
+    border-bottom: 3px solid #ccc;
+    padding: 10px;
+    font-size: 14px;
+    resize: none;
+    width: 100%;
+}
+
+/* 터미널 영역 */
+#output-terminal {
+    flex-grow: 1;
+    background: black;
+    color: white;
+    padding: 10px;
+    font-family: monospace;
+    overflow-y: auto;
+}
+
+#example-btn {
+    background-color: #4f86d9;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#example-btn:hover {
+    background-color: #2855b4;
+}
+
+/* 드롭다운 스타일 */
+#exampleDropdown {
+    display: none;
+    position: absolute;
+    left: 0; /* 버튼과 정렬 */
+    top: 100%; /* 버튼 바로 아래 위치 */
+    background: white;
+    border: 1px solid #ccc;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+    padding: 5px;
+    width: 150px;
+    z-index: 9999; /* 높은 값으로 설정하여 콘솔창보다 위로 */
+}
+
+/* 드롭다운 내부 요소 스타일 */
+.example-item {
+    padding: 10px;
+    cursor: pointer;
+    text-align: left;
+}
+
+.example-item:hover {
+    background: #f0f0f0;
+}
+
+/* 드롭다운이 버튼 바로 아래에 오도록 설정 */
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+}

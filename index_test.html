@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub Pages 알림</title>
+</head>
+<body>
+    <h1>GitHub Pages에서 Render 서버로 요청</h1>
+    <button id="notify-btn">알림 보내기</button>
+
+    <script>
+        document.getElementById("notify-btn").addEventListener("click", async function() {
+            try {
+                const response = await fetch("https://jwak-interpreter.onrender.com/notify", {
+                    method: "GET",
+                });
+                const data = await response.json();
+                alert(data.message); // 브라우저 알림
+            } catch (error) {
+                alert("서버 요청 실패!");
+                console.error(error);
+            }
+        });
+    </script>
+</body>
+</html>

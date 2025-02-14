@@ -6,7 +6,9 @@ def main():
         print("How to use: python -m lang_shung_jwak <filename.jwak>")
         sys.exit(1)
 
-    code = sys.argv[1]
+    filename = sys.argv[1]
+    with open(filename, "r", encoding="UTF-8") as file:
+        code = file.read()
 
     interpreter = Lang_shung_jwak()
     interpreter.compile(code)

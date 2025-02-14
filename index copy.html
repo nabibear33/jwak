@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>Online Interpreter</title>
+  <!-- xterm.js stylesheet -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm/css/xterm.css" />
+  <script src="https://cdn.jsdelivr.net/npm/xterm/lib/xterm.js"></script>
+
+  <style>
+    /* Reset some default browser styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+
+    /* Toolbar for the Compile/Run button */
+    .toolbar {
+      padding: 8px;
+      background-color: #f7f7f7;
+      border-bottom: 1px solid #ccc;
+    }
+
+    .toolbar button {
+      padding: 6px 12px;
+      font-size: 14px;
+      background-color: #fff;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.2s;
+    }
+
+    .toolbar button:hover {
+      background-color: #eaeaea;
+    }
+
+    /* Editor container takes the top half */
+    #editor-container {
+      height: 50%;
+    }
+
+    /* Terminal container takes the bottom half */
+    #terminal-container {
+      height: 50%;
+      background-color: black;
+      padding: 10px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Toolbar with the Compile/Run button -->
+  <div class="toolbar">
+    <button id="run-btn">Compile/Run</button>
+  </div>
+  
+  <!-- Code editor container -->
+  <div id="editor-container"></div>
+  
+  <!-- Terminal emulator container -->
+  <div id="terminal-container"></div>
+
+  <!-- Load Monaco Editor via CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.33.0/min/vs/loader.js"></script>
+  <script>
+    // Configure the base path for Monaco Editor
+    require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.33.0/min/vs' }});
+    
+    let editor;
+    require(['vs/editor/editor.main'], function() {
+      editor = monaco.editor.create(document.getElementById('editor-container'), {
+        value: [
+          '교주님',
+          '',
+          '슈우웅...좌아아아아아아아아악!!!!',
+          '슈우우웅..좌아아악,..??좌아아악,..?!좌악!!',
+          '',
+          '슝?!! 좌아악,..좌아악!!',
+          '슈웅? 좌아악,...좌악~~ 좌아악??',
+          '',
+          '슈우우우웅...좌아아아아아아아아악!!!!;슝',
+          '슈우우우우웅??? 좌아아아아아아아아악?!!!;슈웅...',
+          '슈우우우우우웅? 슈우우우웅..., 슈우우우우웅!!',
+          '',
+          '비비 따잇!!ㅋㅋㅋㅋ하는 재미ㅋㅋㅋ 슈우우우우우웅...@@@@ 좌아아아아아아아아악..!',
+          '비비ㅋㅋㅋ 보호막 따따잇ㅋㅋㅋㅋ',
+          '비비... 따잇!!!ㅋㅋㅋㅋ',
+          '',
+          '에잇? 에잇!!ㅋㅋㅋㅋ하는 재미ㅋㅋㅋㅋ 슈웅;;;좍?!!',
+          '슈웅?? 슈웅...;;; 좍?!',
+          '에잇!!ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
+          '',
+          '비비 따잇ㅋㅋㅋ',
+          '',
+          '에잇! 에잇!ㅋㅋㅋㅋ 하는 재미? 슝?!; 좍!!',
+          '슝..슝..;좍...',
+          '에잇!ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ',
+        ].join('\n'),
+        language: 'python', // Python 실행을 위한 언어 설정
+        theme: 'vs-dark',
+        automaticLayout: true
+      });
+    });
+
+    // Initialize xterm.js terminal
+    const terminal = new Terminal({
+      cursorBlink: true,
+      fontSize: 14,
+    });
+    terminal.open(document.getElementById('terminal-container'));
+
+    // Function to execute code on backend
+    async function runCode() {
+      const code = editor.getValue(); // Get code from Monaco Editor
+      terminal.clear();
+      terminal.writeln("Running your code...\n");
+
+      try {
+        const response = await fetch("http://localhost:3000/execute", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ code: code }),
+        });
+
+        console.log("Response Status:", response.status);
+        console.log("Response Headers:", response.headers);
+        console.log("Response URL:", response.url);
+        if (!response.ok) {
+            throw new Error(`Server error: ${response.status}`);
+        }
+
+        const result = await response.json();
+        terminal.writeln(result.output);
+      } catch (error) {
+        terminal.writeln("Error: Unable to connect to server.");
+        console.error(error);
+      }
+    }
+
+    // Attach event listener to button
+    document.getElementById("run-btn").addEventListener("click", runCode);
+  </script>
+</body>
+</html>
