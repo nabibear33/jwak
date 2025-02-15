@@ -30,11 +30,13 @@ app.post("/execute", (req, res) => {
     // 표준 출력을 실시간으로 수집
     process.stdout.on("data", (data) => {
         output += iconv.decode(data, "utf-8");
+        console.log(iconv.decode(data, "utf-8"));
     });
 
     // 표준 에러 출력 수집
     process.stderr.on("data", (data) => {
         errorOutput += iconv.decode(data, "utf-8");
+        console.log(iconv.decode(data, "utf-8"));
     });
 
     // 입력값이 있으면 하나씩 입력 (개행 포함)
@@ -45,8 +47,6 @@ app.post("/execute", (req, res) => {
         process.stdin.end(); // 입력 완료
     }
 
-    console.log(output);
-    console.log(errorOutput);
     // 실행 종료 후 응답 반환
     process.on("close", (code) => {
         fs.unlinkSync(filename);
