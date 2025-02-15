@@ -79,10 +79,16 @@ document.addEventListener("click", function (event) {
     }
 });
 
+
 // XTerm.js 터미널 설정
-const term = new Terminal();
+const fitAddon = new window.FitAddon.FitAddon();
+const term = new Terminal({
+    convertEol: true,
+});
+term.loadAddon(fitAddon);
 term.open(document.getElementById("output-terminal"));
 term.writeln("Click on RUN button to see the output");
+
 
 // Split.js 설정 (드래그 가능하도록)
 Split(["#editor-container", "#right-panel"], {
@@ -90,8 +96,18 @@ Split(["#editor-container", "#right-panel"], {
     minSize: 200,    // 패널 최소 크기
     gutterSize: 6,   // 실제 보이는 구분선 크기
     cursor: "e-resize", // 기본 드래그 커서
-    // gutterClassName: "custom-gutter-horizontal", // 구분선 클래스 추가
+    onDragEnd: () => {
+        fitAddon.fit();  // ✅ 터미널 크기 자동 조정
+    }
 });
+
+fitAddon.fit();
+
+// 브라우저 창 크기 변경 시 터미널 크기 조정
+window.addEventListener("resize", () => {
+    fitAddon.fit();
+});
+
 
 // 입력창과 터미널 사이 분할
 Split(["#input-container", "#terminal-container"], {
@@ -136,11 +152,8 @@ document.getElementById("run-btn").addEventListener("click", async function () {
         });
         
         const result = await response.json();
-        console.log(typeof(result.output));
-        console.log(result.output);
-        console.log(12312323);
-
         term.writeln(result.output);
+
     } catch (error) {
         term.writeln("Error: Unable to connect to server.");
         console.error("Fetch error:", error);

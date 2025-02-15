@@ -6,6 +6,8 @@
     "fs": "^0.0.1-security",
     "iconv-lite": "^0.6.3",
     "path": "^0.12.7",
-    "split.js": "^1.6.5"
+    "split.js": "^1.6.5",
+    "xterm": "^5.3.0",
+    "xterm-addon-fit": "^0.8.0"
   }
 }
