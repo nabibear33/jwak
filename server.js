@@ -45,6 +45,8 @@ app.post("/execute", (req, res) => {
         process.stdin.end(); // 입력 완료
     }
 
+    console.log(output);
+    console.log(errorOutput);
     // 실행 종료 후 응답 반환
     process.on("close", (code) => {
         fs.unlinkSync(filename);
