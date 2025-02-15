@@ -29,13 +29,13 @@ app.post("/execute", (req, res) => {
 
     // 표준 출력을 실시간으로 수집
     process.stdout.on("data", (data) => {
-        output += iconv.decode(data, "utf-8");
+        output += iconv.decode(data, "euc-KR");
         console.log(iconv.decode(data, "utf-8"));
     });
 
     // 표준 에러 출력 수집
     process.stderr.on("data", (data) => {
-        errorOutput += iconv.decode(data, "utf-8");
+        errorOutput += iconv.decode(data, "euc-KR");
         console.log(iconv.decode(data, "utf-8"));
     });
 
