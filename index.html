@@ -30,7 +30,6 @@
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
-    
     <!-- Header -->
     <header>
       <h2>Lang-shung-jwak(랭슝좍) 코드 변환기</h2>
@@ -38,42 +37,64 @@
     
     <!-- Bottom Panel (Run Button) -->
     <div id="control-bar">
-      <div class="dropdown-container">
+      <div id="left-buttons">
         <button id="example-btn">예제 코드</button>
-        <div id="exampleDropdown">
-          <div class="example-item" data-example="hello_world">Hello, world!</div>
-          <div class="example-item" data-example="gugudan">구구단</div>
-          <div class="example-item" data-example="fibonacci">피보나치 수열</div>
-          <div class="example-item" data-example="syntax_error">Syntax Error</div>
-          <div class="example-item" data-example="infinite_loop">Infinite loop Error</div>
+        <div class="dropdown-container">
+          <div id="exampleDropdown">
+            <div class="example-item" data-example="hello_world">Hello, world!</div>
+            <div class="example-item" data-example="gugudan">구구단</div>
+            <div class="example-item" data-example="fibonacci">피보나치 수열</div>
+            <div class="example-item" data-example="syntax_error">Syntax Error</div>
+            <div class="example-item" data-example="infinite_loop">Infinite loop Error</div>
+          </div>
         </div>
+        <!-- 사용법 버튼 추가 -->
+        <button id="usage-btn">사용법</button>
+        <a href="https://github.com/nabibear33/Lang-shung-jwak" target="_blank">
+          <img src="image/github-mark.png" alt="클릭하면 이동" class="github-icon">
+        </a>
       </div>
       <button id="run-btn">RUN ▶</button>
     </div>
-
+    
     <!-- Main Container with Resizable Panels -->
     <div id="main-container">
       <div id="editor-container"></div>
-        <div id="right-panel">
-          <!-- User Input 영역 -->
-          <div id="input-output-container">
-            <div id="input-container">
-              <div class="input-header">입력</div>
-              <textarea id="stdin-input" placeholder="코드 실행 시 입력으로 전달되는 값을 미리 기입해주세요(입력값은 엔터로 구분)"></textarea>
-            </div>
-            <div id="terminal-container">
-              <!-- Output Terminal 영역 -->
-              <div class="terminal-header">Terminal</div>
-              <div id="output-terminal"></div>
-            </div>
+      <div id="right-panel">
+        <!-- User Input 영역 -->
+        <div id="input-output-container">
+          <div id="input-container">
+            <div class="input-header">입력</div>
+            <textarea id="stdin-input" placeholder="코드 실행 시 입력으로 전달되는 값을 미리 기입해주세요(입력값은 엔터로 구분)"></textarea>
+          </div>
+          <div id="terminal-container">
+            <!-- Output Terminal 영역 -->
+            <div class="terminal-header">Terminal</div>
+            <div id="output-terminal"></div>
           </div>
         </div>
-      
+      </div>       
     </div>
 
     <!-- Load Monaco Editor -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.33.0/min/vs/loader.js"></script>
     <script src="script.js"></script>
+    
+  </body>
+  
+  <!-- 사용법 팝업 창 -->
+  <div id="popup-overlay" class="overlay hidden"></div>
+  <div id="usage-popup" class="popup hidden">
+      <div class="popup-content">
+          <span class="close-btn">&times;</span>
+          <h2>Shung-jwak Interpreter 사용법</h2>
+          <p>1. 예제 코드 버튼을 눌러 원하는 예제를 선택해 보세요.</p>
+          <p>2. RUN 버튼을 눌러 실행하고 결과를 확인하세요.</p>
+          <p>3. 피보나치 수열의 경우 n개의 피보나치 수열을 오름차순으로 반환하는 함수입니다. 원하는 n을 입력창에 입력 후 코드를 실행해 보세요.</p>
+          <p>4. ' ', '?', '!', '.'를 코드 사이사이에 넣어 풍부한 표현을 해 보세요.</p>
+          <p>5. 코드 창, 입력 창, 터미널 창 경계를 드래그하여 크기를 조정할 수 있습니다.</p>
+          <p>6. 자세한 문법은 Github를 참고해 주세요.</p>
+      </div>
+  </div>
 
-</body>
 </html>

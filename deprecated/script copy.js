@@ -90,7 +90,7 @@ Split(["#editor-container", "#right-panel"], {
     minSize: 200,    // 패널 최소 크기
     gutterSize: 6,   // 실제 보이는 구분선 크기
     cursor: "e-resize", // 기본 드래그 커서
-    // gutterClassName: "custom-gutter-horizontal", // 구분선 클래스 추가
+    gutterClassName: "custom-gutter-horizontal", // 구분선 클래스 추가
 });
 
 // 입력창과 터미널 사이 분할
@@ -100,70 +100,31 @@ Split(["#input-container", "#terminal-container"], {
     minSize: 100, // 최소 크기 제한
     gutterSize: 6, // 구분선 크기
     cursor: "n-resize",
-});
-
-document.querySelectorAll(".gutter-horizontal").forEach(gutter => {
-    gutter.addEventListener("mouseenter", () => {
-        gutter.style.cursor = "e-resize";
-    });
-});
-
-document.querySelectorAll(".gutter-vertical").forEach(gutter => {
-    gutter.addEventListener("mouseenter", () => {
-        gutter.style.cursor = "n-resize";
-    });
+    gutterClassName: "custom-gutter-vertical",
 });
 
 // RUN 버튼 이벤트
-document.getElementById("run-btn").addEventListener("click", async function () {
-    const runButton = this; // 현재 클릭된 버튼
-    runButton.classList.add("loading"); // 로딩 효과 추가
-    runButton.disabled = true; // 버튼 비활성화
-
-    const code = editor.getValue(); // 코드 가져오기
-    const userInput = document.getElementById("stdin-input").value.trim().split("\n");
+document.getElementById("run-btn").addEventListener("click", async () => {
+    const code = editor.getValue(); // Monaco Editor에서 코드 가져오기
+    const userInput = document.getElementById("stdin-input").value.trim().split("\n"); // STDIN 입력
 
     term.clear();
-    term.writeln("Running your code...\n");
+    term.writeln("코드 실행 중...\n");
 
     try {
         const response = await fetch("http://localhost:3000/execute", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ code: code, inputs: userInput }),
+            body: JSON.stringify({ code: code, inputs: userInput })
         });
+
         
         const result = await response.json();
-        
+        term.clear();
         term.writeln("jwak@jwak-server ~$ python main.py\n");
         term.writeln(result.output);
     } catch (error) {
         term.writeln("Error: Unable to connect to server.");
         console.error("Fetch error:", error);
     }
-
-    // 실행이 끝나면 버튼 원래대로 복구
-    runButton.classList.remove("loading"); // 로딩 효과 제거
-    runButton.disabled = false; // 버튼 다시 활성화
-});
-
-// 이벤트 리스너를 DOM이 완전히 로드된 후 등록
-document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("usage-btn").addEventListener("click", function() {
-        // console.log("usage button clicked");
-        document.getElementById("popup-overlay").classList.remove("hidden");
-        document.getElementById("usage-popup").classList.remove("hidden");
-    });
-
-    document.querySelector(".close-btn").addEventListener("click", function() {
-        // console.log("close button clicked");
-        document.getElementById("popup-overlay").classList.add("hidden");
-        document.getElementById("usage-popup").classList.add("hidden");
-    });
-
-    document.getElementById("popup-overlay").addEventListener("click", function() {
-        // console.log("overlay clicked");
-        document.getElementById("usage-popup").classList.add("hidden");
-        this.classList.add("hidden");
-    });
 });
