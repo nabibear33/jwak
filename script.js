@@ -125,17 +125,21 @@ document.getElementById("run-btn").addEventListener("click", async function () {
 
     term.clear();
     term.writeln("Running your code...\n");
+    term.writeln("jwak@jwak-server ~$ python main.py\n");
 
     try {
         const response = await fetch("https://jwak-interpreter.onrender.com/execute", {
+        // const response = await fetch("http://localhost:3000/execute", {            
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ code: code, inputs: userInput }),
         });
         
         const result = await response.json();
-        
-        term.writeln("jwak@jwak-server ~$ python main.py\n");
+        console.log(typeof(result.output));
+        console.log(result.output);
+        console.log(12312323);
+
         term.writeln(result.output);
     } catch (error) {
         term.writeln("Error: Unable to connect to server.");
