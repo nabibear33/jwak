@@ -9,7 +9,7 @@ body {
 
 /* 헤더 스타일 */
 header {
-    background: url('/image/header_image.png') no-repeat center center;
+    background: url('image/header_image.png') no-repeat center center;
     background-position: 50% 35%; /* X, Y 위치 비율 (가운데 정렬) */
     background-size: 200%; /* 이미지가 전체 배경을 덮도록 설정 */
     color: rgb(255, 255, 255); /* 텍스트 색상을 흰색으로 변경 */

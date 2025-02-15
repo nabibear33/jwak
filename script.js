@@ -12,11 +12,11 @@ require(["vs/editor/editor.main"], function () {
 });
 
 const files = [
-    'hello_world.txt',
-    'gugudan.txt',
-    'fibonacci.txt',
-    'infinite_loop.txt',
-    'syntax_error.txt',    
+    ['Hello, world!', 'hello_world.txt'],
+    ['구구단', 'gugudan.txt'],
+    ['피보나치 수열', 'fibonacci.txt'],
+    ['무한 루프', 'infinite_loop.txt'],
+    ['문법 오류', 'syntax_error.txt'],
 ];
 
 const examples = {};
@@ -28,12 +28,12 @@ exampleBtn.disabled = true;
 
 async function loadFiles() {
     for (const file of files) {
-        const response = await fetch(`example/${file}`);
+        const response = await fetch(`example/${file[1]}`);
         const content = await response.text();
 
-        const key = file.replace('.txt', '');
+        const key = file[1].replace('.txt', '');
         examples[key] = {
-            name: key.charAt(0).toUpperCase() + key.slice(1),
+            name: file[0],
             code: content
         };
     }
