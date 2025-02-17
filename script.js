@@ -7,7 +7,8 @@ require(["vs/editor/editor.main"], function () {
         value: '교주님',
         language: "python",
         theme: "vs-dark",
-        automaticLayout: true
+        automaticLayout: true,
+        fontFamily: "D2Coding",
     });
 });
 
