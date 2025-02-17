@@ -1,7 +1,7 @@
 import sys
 import re
 
-MAX_LINE_COUNT = 1000000
+MAX_LINE_COUNT = 100000
 MAX_VARIABLE_SIZE = 256
 
 class Lang_shung_jwak:
