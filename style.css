@@ -43,6 +43,7 @@ h2 {
 #editor-container {
     flex-grow: 1;
     border-right: 0px solid #ccc;
+    font-family: "D2Coding";
 }
 
 /* 오른쪽 패널 스타일 */
@@ -71,6 +72,7 @@ h2 {
     flex-grow: 1;
     min-height: 50px; /* 너무 작아지는 것을 방지 */
     height: auto;
+    font-family: "D2Coding";
 }
 
 
