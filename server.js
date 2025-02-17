@@ -3,6 +3,7 @@ const cors = require("cors");
 const { spawn } = require("child_process");
 const fs = require("fs");
 const iconv = require("iconv-lite");
+const { v4: uuidv4 } = require("uuid");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -16,11 +17,12 @@ app.use(cors({
 app.use(express.json());
 
 app.post("/execute", (req, res) => {
-    console.log(`Get Request... Total request count ${count}`);
     count = count + 1;
+    console.log(`Get Request... Total request count ${count}`);
     const { code, inputs } = req.body;
 
-    const filename = "request.jwak";
+    const filename = `request-${uuidv4()}.jwak`;
+    // console.log(`${uuidv4()}`);
     fs.writeFileSync(filename, code);
     
     // 프로세스를 spawn하여 실행 (stdin을 통해 입력 제공 가능)
